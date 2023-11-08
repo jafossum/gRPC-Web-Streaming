@@ -1,5 +1,10 @@
 # gRPC-Web Streaming example
 
+Combining information from these sources:
+
+- [gRPC-Web Basic Tutorial](https://grpc.io/docs/platforms/web/basics/)
+- [gRPC-Web GitHub Examples](https://github.com/grpc/grpc-web/tree/master/net/grpc/gateway/examples/helloworld)
+
 ## Genarate Code
 
 ### Generate Server and Client proto files
