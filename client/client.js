@@ -2,6 +2,7 @@ const {
   HelloRequest,
   HelloReply,
   RepeatHelloRequest,
+  SubscribeHelloRequest,
 } = require("./greeter-service_pb.js");
 const { GreeterClient } = require("./greeter-service_grpc_web_pb.js");
 
@@ -37,6 +38,13 @@ streamRequest2.setCount(7);
 
 console.log("Calling stream server expecting 7 returns");
 subscribeToStream(client.sayRepeatedHello(streamRequest2, {}));
+
+// server streaming call - Stream Subscribe
+var subRequest = new SubscribeHelloRequest();
+subRequest.setName("Stream Request Subscription");
+
+console.log("Calling stream server expecting NATS receives");
+subscribeToStream(client.subscribeRepeatedHello(subRequest, {}));
 
 function subscribeToStream(stream) {
   stream.on("data", (response) => {

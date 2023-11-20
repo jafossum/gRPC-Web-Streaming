@@ -8,6 +8,7 @@ import (
 
 	"github.com/jafossum/grpc-web-streaming/greeter"
 	"github.com/jafossum/grpc-web-streaming/greeter/api"
+	"github.com/jafossum/grpc-web-streaming/nats"
 	"google.golang.org/grpc"
 )
 
@@ -27,7 +28,13 @@ func main() {
 
 	var opts []grpc.ServerOption
 	grpcServer := grpc.NewServer(opts...)
-	api.RegisterGreeterServer(grpcServer, greeter.New())
+
+	sub := nats.NewNats()
+	grSrv, err := greeter.New(sub)
+	if err != nil {
+		log.Fatal(err)
+	}
+	api.RegisterGreeterServer(grpcServer, grSrv)
 
 	grpcServer.Serve(lis)
 }

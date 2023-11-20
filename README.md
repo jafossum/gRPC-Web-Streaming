@@ -27,16 +27,24 @@ Combining information from these sources:
     cd server
     go run main.go
 
-## Proxy
+## Proxy and NATS
 
-You can run the grpc-web development proxy with an `npx` command, or run `Envoy` as a proper proxy
+`Envoy` is included in the `docker-compose` file togheter with `NATS` in this example
 
-### 1. grpc-web/proxy
+You can run the grpc-web development proxy with an `npx` command, or run `Envoy` as a proper proxy.
+
+### Start the Environment
+
+    docker-compose up -d
+
+#### Manual Proxy start just for reference
+
+##### 1. grpc-web/proxy
 
     cd client
     npx @grpc-web/proxy --target http://0.0.0.0:9090 --listen 8080
 
-### 2. Envoy
+##### 2. Envoy
 
     docker run --rm -d -v "$(pwd)"/envoy.yaml:/etc/envoy/envoy.yaml:ro -p 8080:8080 -p 9901:9901 envoyproxy/envoy:v1.22.0
 
@@ -60,3 +68,9 @@ You can run the grpc-web development proxy with an `npx` command, or run `Envoy`
 ## See the Result
 
 Visit `localhost:8081` and watch the console (Chrome: `F12`).
+
+## Publish NATS Messages
+
+    nats pub foo.bar.heartbeat --count=10 --sleep 500ms "publication #{{Count}} @ {{TimeStamp}}"
+
+    nats pub foo.bar.timeseries --count=10 --sleep 500ms "publication #{{Count}} @ {{TimeStamp}}"

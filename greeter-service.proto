@@ -9,6 +9,9 @@ service Greeter {
 
   // server streaming call
   rpc SayRepeatedHello(RepeatHelloRequest) returns (stream HelloReply);
+
+  // server streaming call
+  rpc SubscribeRepeatedHello(SubscribeHelloRequest) returns (stream HelloReply);
 }
 
 // The request message containing the user's name.
@@ -25,4 +28,9 @@ message HelloReply {
 message RepeatHelloRequest {
   string name = 1;
   int32 count = 2;
+}
+
+// The Stream request messsage
+message SubscribeHelloRequest {
+  string name = 1;
 }
