@@ -5,6 +5,16 @@ Combining information from these sources:
 - [gRPC-Web Basic Tutorial](https://grpc.io/docs/platforms/web/basics/)
 - [gRPC-Web GitHub Examples](https://github.com/grpc/grpc-web/tree/master/net/grpc/gateway/examples/helloworld)
 
+![](./resources/grpcWebStreaming.png)
+
+_gRPC dataflow_
+
+## gRPC Streaming Types
+
+![](./resources/grpcStreaming.png)
+
+_Types of gRPC Streaming_
+
 ## Genarate Code
 
 ### Generate Server and Client proto files
