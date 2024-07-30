@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 option go_package = "./greeter/api";
+option csharp_namespace = "Greeter.API";
 
 // The greeting service definition.
 service Greeter {

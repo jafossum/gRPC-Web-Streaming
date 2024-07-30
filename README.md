@@ -32,16 +32,22 @@ _Types of gRPC Streaming_
 
 ## Start the system
 
-### Server
+### Server GO
 
     cd server
     go run main.go
+
+### Server .NET
+
+    cd server.net
+    dotnet run --project grpcWeb
 
 ## Proxy and NATS
 
 `Envoy` is included in the `docker-compose` file togheter with `NATS` in this example
 
 You can run the grpc-web development proxy with an `npx` command, or run `Envoy` as a proper proxy.
+Envoy can get into trouble, so using the `npx` command with `grpc-web/proxy` is preferred :)
 
 ### Start the Environment
 
