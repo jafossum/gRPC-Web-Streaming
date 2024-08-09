@@ -1,0 +1,23 @@
+<form class="example-full-width">
+
+<p>greeter-client works!</p>
+
+<p>Stream Results:</p>
+<mat-list>
+    @for (stream of repeatedResults; track stream) {
+        <mat-list-item>
+            <span matListItemTitle>Repeated Results</span>
+            <span matListItemLine>{{stream}}</span>
+        </mat-list-item>
+}
+</mat-list>
+
+<mat-list>
+    @for (stream of streamResults; track stream) {
+        <mat-list-item>
+            <span matListItemTitle>Stream Results</span>
+            <span matListItemLine>{{stream}}</span>
+        </mat-list-item>
+    }
+</mat-list>
+</form>

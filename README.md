@@ -15,20 +15,40 @@ _gRPC dataflow_
 
 _Types of gRPC Streaming_
 
-## Genarate Code
+## gRPC Implementations
 
-### Generate Server and Client proto files
+This repository holds the following gRPC example implementations for the `GreeterService` described in [greeter-service.proto](./greeter-service.proto):
 
-    protoc -I=. --go_out=./server --go-grpc_out=./server ./greeter-service.proto
-    protoc -I=. --js_out=import_style=commonjs:./client ./greeter-service.proto
-    protoc -I=. --grpc-web_out=import_style=commonjs,mode=grpcwebtext:./client ./greeter-service.proto
+| Folder         | Description                          |
+| -------------- | ------------------------------------ |
+| server         | GO gRPC Server implementation        |
+| server.net     | .Net Core gRPC Server implementation |
+| client         | Vanilla JavaScript gRPC-Web client   |
+| client-angular | Angular gRPC-Web client              |
 
-### Generate client code
+## Generate Code
 
-    cd client
-    (May be needed) export NODE_OPTIONS=--openssl-legacy-provider
-    npm install
-    npx webpack client.js
+Each separate implementation in the repository has its own `proto-gen.sh` file (except server.net that does this though the .sln file)
+
+```sh
+# Server
+cd server;
+./proto-gen.sh
+```
+
+```sh
+# Client
+cd client
+npm install
+./proto-gen.sh
+```
+
+```sh
+# Angular Client
+cd client-angular
+npm install
+./proto-gen.sh
+```
 
 ## Start the system
 
@@ -41,6 +61,47 @@ _Types of gRPC Streaming_
 
     cd server.net
     dotnet run --project grpcWeb
+
+### gRPC-Web Proxy
+
+Run a proxy to support gRPC and gRPC-Web between server and client
+
+    npm install -g @grpc-web/proxy
+    npx @grpc-web/proxy --target http://0.0.0.0:9090 --listen 8080
+
+### Angular Client
+
+    cd client-angular
+    npm install
+    ng serve
+
+### Vanilla JavaScript Client
+
+    cd client
+    # May be needed
+    export NODE_OPTIONS=--openssl-legacy-provider
+    npm install
+    npx webpack client.js
+
+#### Run the client in a webserver
+
+    python3 -m http.server 8081 &
+
+#### Nice to know commands
+
+    jobs
+
+    fg
+    fg %1
+
+    bg
+    bg %1
+
+    kill %1
+
+#### See the Result
+
+Visit `localhost:8081` and watch the console (Chrome: `F12`).
 
 ## Proxy and NATS
 
@@ -57,33 +118,11 @@ Envoy can get into trouble, so using the `npx` command with `grpc-web/proxy` is 
 
 ##### 1. grpc-web/proxy
 
-    cd client
     npx @grpc-web/proxy --target http://0.0.0.0:9090 --listen 8080
 
 ##### 2. Envoy
 
     docker run --rm -d -v "$(pwd)"/envoy.yaml:/etc/envoy/envoy.yaml:ro -p 8080:8080 -p 9901:9901 envoyproxy/envoy:v1.22.0
-
-### Run the client in a webserver
-
-    cd client
-    python3 -m http.server 8081 &
-
-### Nice to know commands
-
-    jobs
-
-    fg
-    fg %1
-
-    bg
-    bg %1
-
-    kill %1
-
-## See the Result
-
-Visit `localhost:8081` and watch the console (Chrome: `F12`).
 
 ## Publish NATS Messages
 
